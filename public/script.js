@@ -1,4 +1,23 @@
-//i don't need a script tag - this page is fake 'updating' from an API, the API that is me manually changing the page. Maybe i'll add in the ability to update things externally later. So here's some pointless code.
+var config = {
+  apiKey: "AIzaSyBUqQVcI1MbcCQmFRs7ZiygmIfHqkFCxms",
+  authDomain: "areenglandstillintheworldcup.firebaseapp.com",
+  databaseURL: "https://areenglandstillintheworldcup.firebaseio.com",
+  projectId: "areenglandstillintheworldcup",
+  storageBucket: "areenglandstillintheworldcup.appspot.com",
+  messagingSenderId: "385160061216"
+};
+firebase.initializeApp(config);
 
-//fetch status of england team in tourn - if still in no change - if database says they are out update as below
-// document.getElementById('status').innerHTML = "NO";
+firebase
+  .database()
+  .ref("in/")
+  .once("value")
+  .then(snapshot => {
+    var overlay = document.querySelector(".overlay");
+    overlay.classList.remove("loading");
+    if (snapshot.val()) {
+      document.getElementById("status").innerHTML = "YES";
+    } else {
+      document.getElementById("status").innerHTML = "NO";
+    }
+  });
